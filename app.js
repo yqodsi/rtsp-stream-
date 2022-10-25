@@ -5,7 +5,8 @@ const onvif = require('node-onvif')
 const express = require("express");
 const app = express();
 const path = require('path');
-
+const ip = require('ip');
+const myip = ip.address();
 // process.camera = [];
 // onvif.startProbe().then((device_info_list) => {
 //   console.log(device_info_list.length + ' devices were found.');
@@ -22,46 +23,43 @@ const path = require('path');
    
 //     }
 arr.push('rtsp://196.75.240.133:555/user=admin_password=6SKNIdTL_channel=1_stream=0.sdp?real_stream')
-
+arr.push('rtsp://196.75.240.133:555/user=admin_password=6SKNIdTL_channel=1_stream=0.sdp?real_stream')
 arr.push('rtsp://196.75.240.133:555/user=admin_password=6SKNIdTL_channel=1_stream=0.sdp?real_stream')
 
-arr.push('rtsp://196.75.240.133:555/user=admin_password=6SKNIdTL_channel=1_stream=0.sdp?real_stream')
   
 
   // });
   //console.log(arr)
     // process.camera = arr;
     arr.forEach((url,i)=>{
-       
-            // let device = new onvif.OnvifDevice({
-            //   xaddr: onCam,
-            //   user: "admin",
-            //   pass: "6SKNIdTL",
-            // }); 
-            //centresale.ddns.net:555/user=admin_password=6SKNIdTL_channel=1_stream=0.sdp?real_stream
-            // Initialize the OnvifDevice object
-            // rtsp: device
-            //   .init()
-            //   .then(() => {
-            //     // Get the UDP stream URL
-            //     let url = device.getUdpStreamUrl();
-                // console.log(url);
-                stream = new Stream({
-                  name: "name",
-                  streamUrl: url,
-                  wsPort: 9000 + i,
-                });
+      // let device = new onvif.OnvifDevice({
+      //   xaddr: onCam,
+      //   user: "admin",
+      //   pass: "6SKNIdTL",
+      // });
+      //centresale.ddns.net:555/user=admin_password=6SKNIdTL_channel=1_stream=0.sdp?real_stream
+      // Initialize the OnvifDevice object
+      // rtsp: device
+      //   .init()
+      //   .then(() => {arr.push('rtsp://196.75.240.133:555/user=admin_password=6SKNIdTL_channel=1_stream=0.sdp?real_stream')
 
-                console.log("URL :" + url);
-              // })
-              // .catch((error) => {
-              //   console.error(error);
-              // });
+      arr.push(
+        "rtsp://196.75.240.133:555/user=admin_password=6SKNIdTL_channel=1_stream=0.sdp?real_stream"
+      );
+      //     // Get the UDP stream URL
+      //     let url = device.getUdpStreamUrl();
+      // console.log(url);
+      stream = new Stream({
+        name: "name",
+        streamUrl: url,
+        wsPort: 9000 + i,
+      });
 
-        
-       
-
-
+      console.log("URL :" + url);
+      // })
+      // .catch((error) => {
+      //   console.error(error);
+      // });
     })
             
 
@@ -106,7 +104,7 @@ app.get("/",(req,res)=>{
         ${ arr.map((can,i)=>{
 
             return ` var canvas${i} = document.getElementById('videoCanvas${i}');
-                     var ws${i} = new WebSocket("ws://localhost:900${i}")
+                     var ws${i} = new WebSocket("ws://${myip}:900${i}")
                      var player${i} = new jsmpeg(ws${i}, {canvas:canvas${i}, autoplay:true,audio:false,loop: true });
             ` 
        }).join("") } 
